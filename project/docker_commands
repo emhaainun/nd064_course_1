@@ -1,11 +1,41 @@
 ## Docker commands used to build the application 
-# TODO: insert the docker build command
+docker build -t techtrends -f Dockerfile .
 
 ## Docker commands used to run the application
-# TODO: insert the docker run command
+docker run -p 7111:3111 techtrends
 
 ## Docker commands used to get the application logs
-# TODO: insert the docker logs command
+docker logs -f 1597d432bebd
 
 ## Logs from the container running the TechTrends application
-# TODO: paste logs from the Docker container 
+[ec2-user@ip-172-31-35-237 ~]$ docker logs -f 1597d432bebd
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://172.17.0.2:3111/ (Press CTRL+C to quit)
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:04:24] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:04:52] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:04:52] "GET /static/css/main.css HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:04:52] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:root:Article "2020 CNCF Annual Report" retrieved!
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:07:35] "GET /1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:07:35] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:Article "KubeCon + CloudNativeCon 2021" retrieved!
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:08:00] "GET /2 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:08:00] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:Article "Kubernetes v1.20 Release Notes" retrieved!
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:08:05] "GET /3 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:08:05] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:Article "CNCF Cloud Native Interactive Landscape" retrieved!
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:08:08] "GET /4 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:08:08] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:Article "CNCF Cloud Native Definition v1.0" retrieved!
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:08:15] "GET /5 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:08:15] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:Article "Kubernetes Certification" retrieved!
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:08:17] "GET /6 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [27/Feb/2023 02:08:17] "GET /static/css/main.css HTTP/1.1" 304 -

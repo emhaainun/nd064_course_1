@@ -1,4 +1,5 @@
 import sqlite3
+import logging
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
@@ -18,6 +19,15 @@ def get_post(post_id):
     connection.close()
     return post
 
+# Function to get counts DB connection and post
+def get_counts(metrics_counts):
+    connection = get_db_connection()
+    post_count = connection.execute('SELECT count(*) FROM posts').fetchone()
+    connection.close()
+
+    metrics_counts['db_conn_count'] += 1
+    metrics_counts['db_post_count'] = post_count[0]
+
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -36,13 +46,16 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
+      logging.error('Article with id {} does not exists'.format(post_id))
       return render_template('404.html'), 404
     else:
+      logging.info('Article "{}" retrieved!'.format(post['title']))
       return render_template('post.html', post=post)
 
 # Define the About Us page
 @app.route('/about')
 def about():
+    logging.info('"About Us" page was retrieved')
     return render_template('about.html')
 
 # Define the post creation functionality 
@@ -61,10 +74,40 @@ def create():
             connection.commit()
             connection.close()
 
+            logging.info('Article "{}" created'.format(title))
             return redirect(url_for('index'))
 
     return render_template('create.html')
 
+# Define healthcheck endpoint
+@app.route('/healthz')
+def healthz():
+    response = app.response_class(
+            response=json.dumps({"result":"OK - healthy"}),
+            status=200,
+            mimetype='application/json'
+    )
+
+    return response
+
+# Define metrics endpoint
+@app.route('/metrics')
+def metrics():
+    metrics_counts = {
+        'db_conn_count': 0,
+        'db_post_count': None
+    }
+
+    get_counts(metrics_counts)
+
+    response = app.response_class(
+        response=json.dumps(metrics_counts),
+        status=200,
+        mimetype='application/json')
+
+    return response
+
 # start the application on port 3111
 if __name__ == "__main__":
+   logging.basicConfig(level=logging.DEBUG)
    app.run(host='0.0.0.0', port='3111')
