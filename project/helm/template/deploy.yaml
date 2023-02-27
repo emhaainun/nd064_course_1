@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: techtrends
+    tag: latest
   name: techtrends
   namespace: {{ .Values.namespace.name }}
 spec:
@@ -10,10 +11,12 @@ spec:
   selector:
     matchLabels:
       app: techtrends
+      tag: latest
   template:
     metadata:
       labels:
         app: techtrends
+        tag: latest
     spec:
       containers:
       - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
