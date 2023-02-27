@@ -7,10 +7,10 @@ metadata:
   namespace: {{ .Values.namespace.name }}
 spec:
   ports:
-  - name: http
     port: {{ .Values.service.port }}
     targetPort: {{ .Values.service.targetPort }}
     protocol: {{ .Values.service.protocol }}
   selector:
     app: techtrends
+    tag: latest
   type: {{ .Values.service.type }}
